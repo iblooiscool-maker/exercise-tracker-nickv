@@ -1,23 +1,59 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import RepetitionExercise from "./components/RepetitionExercise";
+import DurationExercise from "./components/DurationExercise";
+
+const EXERCISES = [
+  { name: "Push Ups", type: "repetition" },
+  { name: "Bicycling", type: "duration" },
+  { name: "Jumping Jacks", type: "repetition" },
+  { name: "Running", type: "duration" },
+  { name: "Sit Ups", type: "repetition" },
+];
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+  const [selectedExercise, setSelectedExercise] = useState(null);
+
+  // Screen 1: Menu
+  if (!selectedExercise) {
+    return (
+      <div style={{ padding: 20 }}>
+        <h1 style={{ fontSize: 48, marginBottom: 10 }}>Go Do Something!</h1>
+        <p>Select an exercise:</p>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 10,
+            width: 220,
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          {EXERCISES.map((ex) => (
+            <button key={ex.name} onClick={() => setSelectedExercise(ex)}>
+              {ex.name}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Screen 2: Exercise screen
+  const { name, type } = selectedExercise;
+
+  return (
+    <div style={{ padding: 20 }}>
+      {type === "repetition" ? (
+        <RepetitionExercise
+          name={name}
+          onReturn={() => setSelectedExercise(null)}
+        />
+      ) : (
+        <DurationExercise
+          name={name}
+          onReturn={() => setSelectedExercise(null)}
+        />
+      )}
     </div>
   );
 }
