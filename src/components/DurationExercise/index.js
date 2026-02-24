@@ -1,4 +1,3 @@
-// src/components/DurationExercise/index.js
 import React, { useEffect, useRef, useState } from "react";
 
 function pad2(num) {

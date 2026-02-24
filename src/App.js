@@ -13,7 +13,7 @@ const EXERCISES = [
 function App() {
   const [selectedExercise, setSelectedExercise] = useState(null);
 
-  // Screen 1: Menu
+  
   if (!selectedExercise) {
     return (
       <div style={{ padding: 20 }}>
@@ -38,7 +38,7 @@ function App() {
     );
   }
 
-  // Screen 2: Exercise screen
+  
   const { name, type } = selectedExercise;
 
   return (
