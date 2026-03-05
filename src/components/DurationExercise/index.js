@@ -10,9 +10,11 @@ function formatTime(totalSeconds) {
   return `${pad2(minutes)}:${pad2(seconds)}`;
 }
 
-export default function DurationExercise({ name, onReturn }) {
+export default function DurationExercise({ name, image, onReturn }) {
   const [seconds, setSeconds] = useState(0);
   const [running, setRunning] = useState(false);
+  const [imgOk, setImgOk] = useState(true);
+
   const intervalRef = useRef(null);
 
   useEffect(() => {
@@ -39,15 +41,31 @@ export default function DurationExercise({ name, onReturn }) {
   };
 
   return (
-    <div style={{ padding: 20 }}>
+    <div className="exercise-page">
       <h1>{name}</h1>
-      <p style={{ fontSize: 24 }}>{formatTime(seconds)}</p>
+      <p className="subtitle">Duration</p>
 
-    
-      <div style={{ display: "flex", gap: 10 }}>
-        {!running ? <button onClick={start}>Start</button> : <button onClick={stop}>Stop</button>}
+      <div className="exercise-image">
+        {imgOk ? (
+          <img src={image} alt={name} onError={() => setImgOk(false)} />
+        ) : (
+          <div className="image-fallback">Image not found</div>
+        )}
+      </div>
+
+      <p className="timer">{formatTime(seconds)}</p>
+      <p className="meta">{running ? "Timer running..." : "Timer stopped"}</p>
+
+      <div className="button-row">
+        {!running ? (
+          <button onClick={start}>Start</button>
+        ) : (
+          <button onClick={stop}>Stop</button>
+        )}
         <button onClick={reset}>Reset</button>
-        <button onClick={onReturn}>Return</button>
+        <button onClick={onReturn} className="secondary">
+          Return
+        </button>
       </div>
     </div>
   );
